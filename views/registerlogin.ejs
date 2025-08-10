@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockSense - Login/Signup</title>
+    <link rel="stylesheet" href="/styles/registerlogin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+</head>
+
+<body>
+    <% if(suc.length>0) { %>
+        <p class="suc">
+            <%= suc%>
+        </p>
+        <% } %>
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-chart-line"></i>StockSense
+                </a>
+                <div class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon toggle-icon"></i>
+                    <span class="toggle-text">Dark Mode</span>
+                </div>
+            </nav>
+
+            <main class="main-content">
+                <div class="auth-container" id="loginContainer">
+                    <h2 class="auth-title">Login to Your Account</h2>
+                    <form class="auth-form" id="loginForm" action="/login/data" method="post">
+                        <div class="form-group">
+                            <label for="loginEmail">Email Address</label>
+                            <input type="email" name="email" minlength="8" id="loginEmail"
+                                placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" name="password" id="loginPassword" placeholder="Enter your password"
+                                required>
+                        </div>
+                        <div class="forgot-password">
+                            <a href="#" style="color:rgb(0, 195, 255)" onclick="showForgotPassword()">Forgot
+                                Password?</a>
+                        </div>
+                        <button type="submit">Login</button>
+                        <div class="auth-switch">
+                            Don't have an account? <a href="#" onclick="switchAuth('register')">Sign up</a>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="auth-container" id="registerContainer" style="display:none;">
+                    <h2 class="auth-title">Create Your Account</h2>
+                    <form class="auth-form" id="registerForm" action="/register/data" method="post">
+                        <div class="form-group">
+                            <label for="registerName">Full Name</label>
+                            <input type="text" id="registerName" name="name" minlength="5"
+                                placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerEmail">Email Address</label>
+                            <input type="email" id="registerEmail" name="email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPassword">Create Password</label>
+                            <input type="password" name="password" id="registerPassword" minlength="8"
+                                placeholder="Create a password" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="registerPhone">Phone Number</label>
+                            <input type="tel" minlength="10" maxlength="10" name="phone" id="registerPhone"
+                                placeholder="Enter your phone number" required>
+                        </div>
+                        <input type="submit" style="background-color: #2a7de1; color:white" value="Register">
+                        <div class="auth-switch">
+                            Already have an account? <a href="#" onclick="switchAuth('login')">Login here</a>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="auth-container" id="forgotPasswordContainer" style="display:none;">
+                    <h2 class="auth-title">Reset Password</h2>
+                    <form class="auth-form" id="forgotPasswordForm" action="/forgetpassword/data" method="get">
+                        <div class="form-group">
+                            <label for="forgotEmail">Email Address</label>
+                            <input type="email" id="forgotEmail" name="email" placeholder="Enter your email" required>
+                            <input type="submit"  name="" value="send otp" id="">
+                        </div>
+                       
+                        <div class="auth-switch">
+                            Remember your password? <a href="#" onclick="switchAuth('login')">Login here</a>
+                        </div>
+                    </form>
+                </div>
+            </main>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+            <script>
+                const passwordFields = [
+                    document.getElementById('registerPassword'),
+                    document.getElementById('registerConfirmPassword'),
+                    document.getElementById('loginPassword')
+                ];
+
+                passwordFields.forEach(field => {
+                    if (field) {
+                        field.addEventListener('mouseenter', () => {
+                            field.type = 'text';
+                        });
+                        field.addEventListener('mouseleave', () => {
+                            field.type = 'password';
+                        });
+                    }
+                });
+                // Theme Toggle Functionality
+                const themeToggle = document.getElementById('themeToggle');
+                const toggleIcon = themeToggle.querySelector('.toggle-icon');
+                const toggleText = themeToggle.querySelector('.toggle-text');
+
+                // Check for saved theme preference or use preferred color scheme
+                const currentTheme = localStorage.getItem('theme') ||
+                    (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+
+                if (currentTheme === 'light') {
+                    document.body.classList.add('light-mode');
+                    toggleIcon.classList.replace('fa-moon', 'fa-sun');
+                    toggleText.textContent = 'Light Mode';
+                }
+
+                themeToggle.addEventListener('click', () => {
+                    document.body.classList.toggle('light-mode');
+                    const isLightMode = document.body.classList.contains('light-mode');
+
+                    if (isLightMode) {
+                        toggleIcon.classList.replace('fa-moon', 'fa-sun');
+                        toggleText.textContent = 'Light Mode';
+                        localStorage.setItem('theme', 'light');
+                    } else {
+                        toggleIcon.classList.replace('fa-sun', 'fa-moon');
+                        toggleText.textContent = 'Dark Mode';
+                        localStorage.setItem('theme', 'dark');
+                    }
+                });
+
+
+
+
+                // Auth Switching Functionality
+                function switchAuth(formToShow) {
+                    const loginContainer = document.getElementById('loginContainer');
+                    const registerContainer = document.getElementById('registerContainer');
+                    const forgotContainer = document.getElementById('forgotPasswordContainer');
+
+                    // Hide all containers first
+                    gsap.to([loginContainer, registerContainer, forgotContainer], {
+                        opacity: 0,
+                        duration: 0.3,
+                        onComplete: () => {
+                            loginContainer.style.display = 'none';
+                            registerContainer.style.display = 'none';
+                            forgotContainer.style.display = 'none';
+
+                            // Show the selected container
+                            let containerToShow;
+                            if (formToShow === 'login') containerToShow = loginContainer;
+                            else if (formToShow === 'register') containerToShow = registerContainer;
+                            else if (formToShow === 'forgot') containerToShow = forgotContainer;
+
+                            if (containerToShow) {
+                                containerToShow.style.display = 'block';
+                                gsap.to(containerToShow, {
+                                    opacity: 1,
+                                    duration: 0.3
+                                });
+                            }
+                        }
+                    });
+                }
+
+                function showForgotPassword() {
+                    switchAuth('forgot');
+                }
+
+                // Form Submission Handling
+
+
+                // Animation on page load
+                document.addEventListener('DOMContentLoaded', () => {
+                    // Navbar animation
+                    gsap.to('.navbar', {
+                        y: 0,
+                        duration: 0.8,
+                        ease: 'power3.out'
+                    });
+
+                    // Theme toggle animation
+                    gsap.to('.theme-toggle', {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        delay: 0.2,
+                        ease: 'power3.out'
+                    });
+
+                    // Show login form by default with animation
+                    const loginContainer = document.getElementById('loginContainer');
+                    loginContainer.style.display = 'block';
+                    gsap.to(loginContainer, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        delay: 0.4,
+                        ease: 'power3.out'
+                    });
+                });
+                gsap.to(".suc", {
+                    y: -1000,
+                    duration: 1,
+
+
+
+
+                    delay: 3
+                })
+                gsap.from(".suc", {
+                    y: -1000,
+                    duration: 1,
+
+
+
+
+                    delay: 0.3
+                })
+            </script>
+</body>
+
+</html>

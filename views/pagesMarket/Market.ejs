@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/styles/Market.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockSense - Global Market Overview</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <!-- Navbar -->
+  <nav class="navbar">
+    <a href="/" class="logo">
+      <i class="fas fa-chart-line"></i> StockSense
+    </a>
+    <ul class="nav-links">
+       <a href="/home">Home</a>
+            <a href="/market">Markets</a>
+            <a href="/watchlist">Watchlist</a>
+            <a href="Profile">Portfolio</a>
+            <a href="/search/stock">Search Stock</a>
+            
+            <a href="/news">News</a>
+    </ul>
+    <div class="auth-buttons">
+      <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon toggle-icon"></i>
+        <span class="toggle-text">Dark Mode</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="main-container">
+    <div class="header">
+      <h1>Indian Market Indices</h1>
+      <p>Live Data | As of <span id="time"><%= new Date().toLocaleTimeString() %></span> on <span id="date"><%= new Date().toDateString() %></span></p>
+    </div>
+
+    <!-- Market Table -->
+    <table class="market-table">
+      <thead>
+        <tr>
+          <th>Symbol</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Change</th>
+          <th>Change %</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% markets.forEach(market => { %>
+          <tr>
+            <td><%= market.symbol %></td>
+            <td><a href="/market/<%= market.symbol.replace(/\^/g, '') %>"><%= market.shortName %></a></td>
+            <td><%= market.price %></td>
+            <td class="<%= market.change >= 0 ? 'positive' : 'negative' %>">
+              <i class="fas <%= market.change >= 0 ? 'fa-arrow-up' : 'fa-arrow-down' %> change-icon"></i>
+              <%= market.change.toFixed(2) %>
+            </td>
+            <td class="<%= market.changePercent >= 0 ? 'positive' : 'negative' %>">
+              <i class="fas <%= market.changePercent >= 0 ? 'fa-arrow-up' : 'fa-arrow-down' %> change-icon"></i>
+              <%= market.changePercent.toFixed(2) %>%
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+
+    <script>
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const toggleIcon = themeToggle.querySelector('.toggle-icon');
+        const toggleText = themeToggle.querySelector('.toggle-text');
+
+        // Check for saved theme preference or use preferred color scheme
+        const currentTheme = localStorage.getItem('theme') || 
+                            (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+
+        if (currentTheme === 'light') {
+            document.body.classList.add('light-mode');
+            toggleIcon.classList.replace('fa-moon', 'fa-sun');
+            toggleText.textContent = 'Light Mode';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            const isLightMode = document.body.classList.contains('light-mode');
+            
+            if (isLightMode) {
+                toggleIcon.classList.replace('fa-moon', 'fa-sun');
+                toggleText.textContent = 'Light Mode';
+                localStorage.setItem('theme', 'light');
+            } else {
+                toggleIcon.classList.replace('fa-sun', 'fa-moon');
+                toggleText.textContent = 'Dark Mode';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Update time and date
+        function updateDateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-IN', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            const dateString = now.toLocaleDateString('en-IN', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            document.getElementById('time').textContent = timeString;
+            document.getElementById('date').textContent = dateString;
+        }
+
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+    </script>
+</body>
+</html>

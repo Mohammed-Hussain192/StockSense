@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StockSense | <%= news.title[0] %></title>
+  <link rel="stylesheet" href="/styles/newsDetails.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="/" class="logo">
+      <i class="fas fa-chart-line"></i>StockSense
+    </a>
+    <ul class="nav-links">
+        <a href="/home">Home</a>
+            <a href="/market">Markets</a>
+            <a href="/watchlist">Watchlist</a>
+            <a href="Profile">Portfolio</a>
+            <a href="/search/stock">Search Stock</a>
+            
+            <a href="/news">News</a>
+    </ul>
+    <div class="theme-toggle" id="themeToggle">
+      <i class="fas fa-moon toggle-icon"></i>
+      <span class="toggle-text">Dark Mode</span>
+    </div>
+  </nav>
+
+  <!-- Article Content -->
+  <div class="main-container">
+    <div class="article-header">
+      <h1 class="article-title"><%= news.title[0] %></h1>
+      
+      <div class="meta">
+        <% if (news.pubDate) { %>
+          <div class="meta-item">
+            <i class="far fa-clock"></i>
+            <span>Published: <%= new Date(news.pubDate[0]).toLocaleString('en-IN', { 
+              day: 'numeric', 
+              month: 'short', 
+              year: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit'
+            }) %></span>
+          </div>
+        <% } %>
+        
+        <% if (news.author) { %>
+          <div class="meta-item">
+            <i class="fas fa-user-edit"></i>
+            <span>Author: <%= news.author[0] %></span>
+          </div>
+        <% } %>
+        
+        <% if (news.source) { %>
+          <div class="meta-item">
+            <i class="fas fa-newspaper"></i>
+            <span>Source: <%= news.source[0] %></span>
+          </div>
+        <% } %>
+      </div>
+      
+      <% if (news.category) { %>
+        <div class="tags-container">
+          <% news.category.forEach(tag => { %>
+            <span class="tag"><%= tag %></span>
+          <% }) %>
+        </div>
+      <% } %>
+    </div>
+
+    <% if (image) { %>
+      <img src="<%= image %>" alt="News Image" class="article-image">
+    <% } %>
+
+    <% if (news.description) { %>
+      <div class="article-section">
+        <h3 class="section-title"><i class="fas fa-list-alt"></i> Summary</h3>
+        <div class="article-content">
+          <p><%= news.description[0] %></p>
+        </div>
+      </div>
+    <% } %>
+
+    <div class="article-section">
+      <h3 class="section-title"><i class="fas fa-newspaper"></i> Full Article</h3>
+      <div class="article-content">
+        <p><%= articleText %></p>
+      </div>
+    </div>
+
+    <% if (news.link) { %>
+      <a class="source-link" href="<%= news.link[0] %>" target="_blank">
+        <i class="fas fa-external-link-alt"></i>
+        Read Full Article on Yahoo Finance
+      </a>
+    <% } %>
+
+    <a href="/news" class="back-link">
+      <i class="fas fa-arrow-left"></i>
+      Back to all news
+    </a>
+  </div>
+
+  <script>
+    // Theme Toggle Functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const toggleIcon = themeToggle.querySelector('.toggle-icon');
+    const toggleText = themeToggle.querySelector('.toggle-text');
+
+    // Check for saved theme preference or use preferred color scheme
+    const currentTheme = localStorage.getItem('theme') || 
+                        (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+
+    if (currentTheme === 'light') {
+      document.body.classList.add('light-mode');
+      toggleIcon.classList.replace('fa-moon', 'fa-sun');
+      toggleText.textContent = 'Light Mode';
+    }
+
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+      const isLightMode = document.body.classList.contains('light-mode');
+      
+      if (isLightMode) {
+        toggleIcon.classList.replace('fa-moon', 'fa-sun');
+        toggleText.textContent = 'Light Mode';
+        localStorage.setItem('theme', 'light');
+      } else {
+        toggleIcon.classList.replace('fa-sun', 'fa-moon');
+        toggleText.textContent = 'Dark Mode';
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+  </script>
+</body>
+</html>

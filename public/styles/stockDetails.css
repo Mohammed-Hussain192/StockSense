@@ -1,0 +1,335 @@
+:root {
+    --bg-color: #0a0e17;
+    --text-color: #ffffff;
+    --primary-color: #4fc3f7;
+    --positive: #64fdd8;
+    --negative: #ff6b6b;
+    --card-bg: #1e293b;
+}
+
+.light-mode {
+    --bg-color: #f5f7fa;
+    --text-color: #333333;
+    --primary-color: #2a7de1;
+    --positive: #3aa8d8;
+    --negative: #e63946;
+    --card-bg: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+}
+
+.navbar {
+    padding: 20px 5%;
+    background-color: rgba(10, 14, 23, 0.9);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.light-mode .navbar {
+    background-color: rgba(245, 247, 250, 0.9);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.main-content {
+    padding: 30px 5%;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--primary-color);
+    text-decoration: none;
+    margin-bottom: 20px;
+}
+
+.stock-header {
+    margin-bottom: 30px;
+}
+
+.stock-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, var(--primary-color), var(--positive));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 5px;
+}
+
+.stock-symbol {
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+.price-display {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 10px 0;
+}
+
+.price-change {
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.positive {
+    background-color: rgba(100, 253, 216, 0.2);
+    color: var(--positive);
+}
+
+.light-mode .positive {
+    background-color: rgba(58, 168, 216, 0.1);
+}
+
+.negative {
+    background-color: rgba(255, 107, 107, 0.2);
+    color: var(--negative);
+}
+
+.light-mode .negative {
+    background-color: rgba(230, 57, 70, 0.1);
+}
+
+.section {
+    margin-bottom: 40px;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.card {
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.light-mode .card {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.stat-item {
+    margin-bottom: 15px;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.prediction-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--card-bg), rgba(79, 195, 247, 0.1));
+}
+
+.light-mode .prediction-card {
+    background: linear-gradient(135deg, var(--card-bg), rgba(42, 125, 225, 0.1));
+}
+
+.prediction-icon {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+}
+
+.prediction-content h3 {
+    margin-bottom: 10px;
+}
+
+.prediction-text {
+    line-height: 1.6;
+}
+
+.news-item {
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.light-mode .news-item {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.news-item:last-child {
+    border-bottom: none;
+}
+
+.news-title {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.news-date {
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+.chart-container {
+    position: relative;
+    height: 400px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.chart-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.timeframe-btn {
+    padding: 6px 12px;
+    border-radius: 4px;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--primary-color);
+    cursor: pointer;
+}
+
+.timeframe-btn.active {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+}
+
+.watchlist-btn {
+    margin-top: 15px;
+    padding: 8px 15px;
+    border-radius: 4px;
+    background-color: var(--card-bg);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+}
+
+.watchlist-btn:hover {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+}
+
+.watchlist-btn.added {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+}
+
+.watchlist-btn.added i {
+    color: gold;
+}
+
+.suc {
+
+    height: 50px;
+    width: 30%;
+    resize: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(246, 52, 42);
+    color: white;
+
+    left: 35%;
+    bottom: 90%;
+    position: absolute;
+    z-index: 1220;
+    font-size: 1vw;
+    border-radius: 0px 0px 10px 10px;
+    border: 1px solid rgb(255, 255, 255);
+    text-transform: capitalize;
+    font-weight: 400;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.returns-section, .shareholding-section {
+  margin: 2rem 0;
+}
+
+.shareholding-section table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.shareholding-section th, .shareholding-section td {
+  border: 1px solid #ccc;
+  padding: 0.5rem 1rem;
+  text-align: left;
+}
+
+.shareholding-section th {
+  background-color: #f4f4f4;
+}
+
+
+@media (max-width: 768px) {
+    .stock-title {
+        font-size: 2rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .prediction-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .chart-container {
+        height: 300px;
+    }
+}

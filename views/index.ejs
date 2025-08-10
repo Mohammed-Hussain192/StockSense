@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockSense - AI-Powered Stock Predictions</title>
+    <link rel="stylesheet" href="/styles/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <i class="fas fa-chart-line"></i>StockSense
+        </a>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#features">Features</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#market-trends">Market Trends</a>
+            
+            <a href="#team">Our Team</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#about">About</a>
+        </div>
+        <div class="auth-buttons">
+            <a href="/register/user/login/user"><button class="btn btn-login" >Login</button></a>
+            <a href="/register/user/login/user"><button class="btn btn-register">Register</button></a>
+            <div class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon toggle-icon"></i>
+                <span class="toggle-text">Dark Mode</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">AI-Powered Stock Market Predictions</h1>
+            <p class="hero-subtitle">Our advanced machine learning algorithms analyze market trends and historical data to provide you with accurate stock predictions. Make informed investment decisions with confidence.</p>
+            <div class="hero-buttons">
+                
+                <a href="/home"><button class="btn btn-hero btn-primary">Get Started</button></a>
+                <a href="/home"><button class="btn btn-hero btn-secondary">Learn More</button></a>
+            </div>
+        </div>
+        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Stock Prediction Dashboard" class="hero-image">
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <h4 class="section-title" style="color: #ffffff;">Advanced Features</h4>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="feature-title">AI-Powered Analysis</h3>
+                <p class="feature-desc">Our system uses deep learning to analyze market patterns and predict future stock movements with high accuracy.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3 class="feature-title">Real-Time Data</h3>
+                <p class="feature-desc">Get access to real-time market data and instant predictions to stay ahead of the competition.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+                <h3 class="feature-title">Portfolio Insights</h3>
+                <p class="feature-desc">Detailed analytics and visualizations help you understand your portfolio performance and risks.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <h3 class="feature-title">Custom Alerts</h3>
+                <p class="feature-desc">Set up personalized alerts for price movements, volume changes, and other critical market indicators.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-history"></i>
+                </div>
+                <h3 class="feature-title">Historical Analysis</h3>
+                <p class="feature-desc">Backtest your strategies with comprehensive historical data and performance metrics.</p>
+            </div>
+           
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <h2 class="section-title">How It Works</h2>
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">01</div>
+                <div class="step-content">
+                    <h3 class="step-title">Data Collection</h3>
+                    <p class="step-desc">Our system gathers vast amounts of market data from multiple sources, including price history, trading volumes, news sentiment, and economic indicators.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">02</div>
+                <div class="step-content">
+                    <h3 class="step-title">AI Processing</h3>
+                    <p class="step-desc">Advanced machine learning models analyze the data, identifying patterns and correlations that human analysts might miss.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">03</div>
+                <div class="step-content">
+                    <h3 class="step-title">Prediction Generation</h3>
+                    <p class="step-desc">The system generates predictions for future price movements, complete with confidence scores and potential risk factors.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">04</div>
+                <div class="step-content">
+                    <h3 class="step-title">User Dashboard</h3>
+                    <p class="step-desc">Results are presented in an intuitive dashboard with clear visualizations and actionable insights tailored to your investment strategy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Trends Section -->
+    <section class="market-trends" id="market-trends">
+        <h2 class="section-title">Latest Market Trends</h2>
+        <div class="trends-container">
+            <div class="trend-card">
+                <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Tech Stocks" class="trend-image">
+                <div class="trend-content">
+                    <h3 class="trend-title">Tech Stocks Surge</h3>
+                    <p class="trend-desc">AI and cloud computing companies show strong growth in Q3, with our system predicting continued upward momentum.</p>
+                    <a href="#" class="trend-link">Read Analysis <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="trend-card">
+                <img src="data:image/png;base64,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" alt="Energy Sector" class="trend-image">
+                <div class="trend-content">
+                    <h3 class="trend-title">Energy Sector Volatility</h3>
+                    <p class="trend-desc">Renewable energy stocks fluctuate as policy changes take effect. Our AI identifies key opportunities.</p>
+                    <a href="#" class="trend-link">Read Analysis <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="trend-card">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Emerging Markets" class="trend-image">
+                <div class="trend-content">
+                    <h3 class="trend-title">Emerging Markets Outlook</h3>
+                    <p class="trend-desc">Our predictive models highlight promising opportunities in Asian and African markets for Q4.</p>
+                    <a href="#" class="trend-link">Read Analysis <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <span style=" transform: translateX(55%);">YOUR GATEWAY TO MARKET MASTERY </span>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team" id="team">
+        <h2 class="section-title">Meet Our Team</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Dr. Sarah Chen" class="member-image">
+                <div class="member-info">
+                    <h3 class="member-name">Dr. Hr Manoj Gowda</h3>
+                    <p class="member-role">Chief Data Scientist</p>
+                    <p class="member-bio">PhD in Machine Learning from Stanford, former lead quant at Goldman Sachs, specializes in time-series forecasting.</p>
+                    <div class="member-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="team-member">
+                <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Michael Rodriguez" class="member-image">
+                <div class="member-info">
+                    <h3 class="member-name">Michael Rodriguez</h3>
+                    <p class="member-role">Head of Financial Analysis</p>
+                    <p class="member-bio">15+ years in equity research, CFA charterholder, develops our fundamental analysis integration models.</p>
+                    <div class="member-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="team-member">
+                <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="David Kim" class="member-image">
+                <div class="member-info">
+                    <h3 class="member-name">Dr. Vishwas</h3>
+                    <p class="member-role">Product Director</p>
+                    <p class="member-bio">Former product lead at Bloomberg Terminal, ensures our platform meets professional investors' needs.</p>
+                    <div class="member-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="team-member">
+                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Priya Patel" class="member-image">
+                <div class="member-info">
+                    <h3 class="member-name">Priya Patel</h3>
+                    <p class="member-role">AI Research Engineer</p>
+                    <p class="member-bio">Specializes in neural networks for financial prediction, MIT graduate with focus on algorithmic trading.</p>
+                    <div class="member-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <h2 class="section-title">What Our Users Say</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <p class="testimonial-text">"StockSense has completely transformed my investment strategy. The AI predictions are remarkably accurate, and I've seen a 35% increase in my portfolio returns since I started using it."</p>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" class="author-avatar">
+                    <div class="author-info">
+                        <h4>Michael Chen</h4>
+                        <p>Professional Investor</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"As someone new to stock trading, I was overwhelmed by the market complexity. StockSense's clear predictions and explanations gave me the confidence to start investing wisely."</p>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" class="author-avatar">
+                    <div class="author-info">
+                        <h4>Sarah Johnson</h4>
+                        <p>Beginner Investor</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"The risk assessment feature alone is worth the subscription. It's helped me avoid several bad investments that looked promising at first glance."</p>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="User" class="author-avatar">
+                    <div class="author-info">
+                        <h4>David Rodriguez</h4>
+                        <p>Financial Advisor</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="about">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <a href="#" class="footer-logo">
+                    <i class="fas fa-chart-line"></i>StockSense
+                </a>
+                <p class="footer-about">StockSense leverages cutting-edge artificial intelligence to provide accurate stock market predictions and investment insights.</p>
+                <div class="footer-social">
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#market-trends">Market Trends</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#team">Our Team</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#about">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Tutorials</a></li>
+                    <li><a href="#">Market Research</a></li>
+                    <li><a href="#">API Documentation</a></li>
+                    <li><a href="#">Help Center</a></li>
+                </ul>
+            </div>
+            <div class="footer-newsletter">
+                <h3>Newsletter</h3>
+                <p>Subscribe to our newsletter for the latest market insights and updates.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your Email" class="newsletter-input" required>
+                    <button type="submit" class="newsletter-btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 StockSense. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle Functionality
+       // Theme Toggle Functionality
+const themeToggle = document.getElementById('themeToggle');
+const toggleIcon = themeToggle.querySelector('.toggle-icon');
+const toggleText = themeToggle.querySelector('.toggle-text');
+
+// Check for saved theme preference or use preferred color scheme
+const currentTheme = localStorage.getItem('theme') || 
+                    (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+
+if (currentTheme === 'light') {
+    document.body.classList.add('light-mode');
+    toggleIcon.classList.replace('fa-moon', 'fa-sun');
+    toggleText.textContent = 'Light Mode';
+}
+
+themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('light-mode');
+    const isLightMode = document.body.classList.contains('light-mode');
+    
+    if (isLightMode) {
+        toggleIcon.classList.replace('fa-moon', 'fa-sun');
+        toggleText.textContent = 'Light Mode';
+        localStorage.setItem('theme', 'light');
+    } else {
+        toggleIcon.classList.replace('fa-sun', 'fa-moon');
+        toggleText.textContent = 'Dark Mode';
+        localStorage.setItem('theme', 'dark');
+    }
+});
+
+// GSAP Animations
+document.addEventListener('DOMContentLoaded', () => {
+    // Register ScrollTrigger plugin
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Navbar animation
+    gsap.to('.navbar', {
+        y: 0,
+        duration: 1,
+        ease: 'power3.out'
+    });
+
+    // Hero section animations
+    gsap.to('.hero-title', {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        delay: 0.5
+    });
+
+    gsap.to('.hero-subtitle', {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        delay: 0.8
+    });
+
+    gsap.to('.hero-buttons', {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        delay: 1.1
+    });
+
+    gsap.to('.hero-image', {
+        opacity: 1,
+        x: 0,
+        duration: 1.5,
+        delay: 0.7,
+        ease: 'back.out(1)'
+    });
+
+    // Section title animations
+    gsap.utils.toArray('.section-title').forEach(title => {
+        gsap.from(title, {
+            scrollTrigger: {
+                trigger: title,
+                start: 'top 80%',
+                toggleActions: 'play none none none'
+            },
+            opacity: 0,
+            y: 50,
+            duration: 1
+        });
+    });
+
+    // Feature cards animation
+    gsap.utils.toArray('.feature-card').forEach((card, i) => {
+        gsap.to(card, {
+            scrollTrigger: {
+                trigger: card,
+                start: 'top 80%',
+                toggleActions: 'play none none none'
+            },
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            delay: i * 0.1
+        });
+    });
+
+    // How it works steps animation
+    gsap.utils.toArray('.step').forEach(step => {
+        gsap.to(step, {
+            scrollTrigger: {
+                trigger: step,
+                start: 'top 80%',
+                toggleActions: 'play none none none'
+            },
+            opacity: 1,
+            duration: 1
+        });
+    });
+
+    // Market trends cards animation
+    gsap.utils.toArray('.trend-card').forEach((card, i) => {
+        gsap.to(card, {
+            scrollTrigger: {
+                trigger: card,
+                start: 'top 80%',
+                toggleActions: 'play none none none'
+            },
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            delay: i * 0.1
+        });
+    });
+
+    // Pricing section animation - Fixed version
+    gsap.to(".pricing span", {
+        x: "-64%", // Changed from transform to x for better performance
+        scrollTrigger: {
+            trigger: ".pricing",
+            start: "top top",
+            end: "+=200%",
+            scrub: 2,
+            pin: true,
+            markers: false // Set to true for debugging if needed
+        }
+    });
+
+    // Team members animation
+    gsap.utils.toArray('.team-member').forEach((member, i) => {
+        gsap.to(member, {
+            scrollTrigger: {
+                trigger: member,
+                start: 'top 80%',
+                toggleActions: 'play none none none'
+            },
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            delay: i * 0.1
+        });
+    });
+
+    // Testimonial cards animation
+    gsap.utils.toArray('.testimonial-card').forEach((card, i) => {
+        gsap.to(card, {
+            scrollTrigger: {
+                trigger: card,
+                start: 'top 80%',
+                toggleActions: 'play none none none'
+            },
+            opacity: 1,
+            scale: 1,
+            duration: 0.8,
+            delay: i * 0.15,
+            ease: 'back.out(1)'
+        });
+    });
+
+    // Scroll animations for navbar
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        if (currentScroll <= 0) {
+            gsap.to('.navbar', { y: 0, duration: 0.3 });
+            return;
+        }
+
+        if (currentScroll > lastScroll) {
+            // Scrolling down
+            gsap.to('.navbar', { y: -100, duration: 0.3 });
+        } else {
+            // Scrolling up
+            gsap.to('.navbar', { y: 0, duration: 0.3 });
+        }
+        lastScroll = currentScroll;
+    });
+});
+    </script>
+</body>
+</html>

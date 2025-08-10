@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Watchlist - StockSense</title>
+  <link rel="stylesheet" href="/styles/watchlist.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ 
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/home" class="logo">
+      <i class="fas fa-chart-line"></i> StockSense
+    </a>
+    <div class="theme-toggle" id="themeToggle">
+      <i class="fas fa-moon"></i>
+      <span>Dark Mode</span>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    <a href="/home" class="back-link">
+      <i class="fas fa-arrow-left"></i> Back to all stocks
+    </a>
+
+    <h1 class="page-title">Your Watchlist</h1>
+
+    <div class="section">
+      <div class="card">
+        <% if (symbols && symbols.length > 0) { %>
+          <div class="watchlist-grid">
+            <% symbols.forEach(item => { %>
+              <div class="symbol-card">
+                <a href="/stock/<%= item.symbol %>" class="symbol-link">
+                  <%= item.symbol %>
+                </a>
+                <a href="/watch/remove/<%= item.symbol %>" class="remove-btn" title="Remove from watchlist">
+                  <i class="fas fa-times"></i>
+                </a>
+              </div>
+            <% }); %>
+          </div>
+        <% } else { %>
+          <div class="empty-state">
+            <div class="empty-icon">
+              <i class="far fa-star"></i>
+            </div>
+            <h3>No symbols in your watchlist yet</h3>
+            <p>Add stocks to track their performance</p>
+            <a href="/home" class="add-stocks-btn">
+              <i class="fas fa-plus"></i> Browse Stocks
+            </a>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme toggle functionality
+    document.getElementById('themeToggle').addEventListener('click', function() {
+      document.body.classList.toggle('light-mode');
+      const isLight = document.body.classList.contains('light-mode');
+      this.innerHTML = `<i class="fas fa-${isLight ? 'sun' : 'moon'}"></i> ${isLight ? 'Light' : 'Dark'} Mode`;
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    });
+
+    // Check for saved theme preference
+    if (localStorage.getItem('theme') === 'light') {
+      document.body.classList.add('light-mode');
+      document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= quote.shortName %> - Stock Analysis | StockSense</title>
+  <link rel="stylesheet" href="/styles/stockDetails.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.2.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.2.1"></script>
+ 
+</head>
+<body>
+      <% if(suc.length>0) { %>
+        <p class="suc">
+            <%= suc%>
+        </p>
+        <% } %>
+  <nav class="navbar">
+    <a href="/home" class="logo">
+      <i class="fas fa-chart-line"></i> StockSense
+    </a>
+    <div class="theme-toggle" id="themeToggle">
+      <i class="fas fa-moon"></i>
+      <span>Dark Mode</span>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    <a href="/home" class="back-link">
+      <i class="fas fa-arrow-left"></i> Back to all stocks
+    </a>
+
+    <div class="stock-header">
+      <h1 class="stock-title"><%= quote.shortName %></h1>
+      <div class="stock-symbol"><%= quote.symbol %></div>
+      <div class="price-display">₹<%= quote.regularMarketPrice %></div>
+      <div class="price-change <%= quote.regularMarketChange >= 0 ? 'positive' : 'negative' %>">
+        <%= quote.regularMarketChange >= 0 ? '+' : '' %><%= quote.regularMarketChange.toFixed(2) %> 
+        (<%= quote.regularMarketChangePercent.toFixed(2) %>%)
+      </div>
+
+        <form action="/watch/list">
+          <input type="hidden" name="symbol" value="<%= quote.symbol %>" id="">
+          <input id="watchlistBtn" class="watchlist-btn" type="submit" value="add to Watch List" name="" id="">
+        </form>
+     
+    </div>
+
+    <!-- Price Chart Section -->
+    <div class="section">
+      <h2 class="section-title">Price History</h2>
+      <div class="card">
+        <div class="chart-controls">
+          <button class="timeframe-btn active" data-days="7">1W</button>
+          <button class="timeframe-btn" data-days="30">1M</button>
+          <button class="timeframe-btn" data-days="90">3M</button>
+          
+        </div>
+        <div class="chart-container">
+          <canvas id="priceChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Volume Chart Section -->
+    <div class="section">
+      <h2 class="section-title">Trading Volume</h2>
+      <div class="card">
+        <div class="chart-container">
+          <canvas id="volumeChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Prediction Section -->
+    <div class="section">
+      <h2 class="section-title">AI Prediction</h2>
+      <div class="prediction-card">
+        <div class="prediction-icon">
+          <i class="fas fa-robot"></i>
+        </div>
+        <div class="prediction-content">
+          <h3>12-Month Forecast</h3>
+          <div class="prediction-text">
+            Based on our AI analysis of 127 technical and fundamental factors, 
+            <%= quote.shortName %> has a <strong>75% probability</strong> of reaching 
+            ₹<%= (quote.regularMarketPrice * 1.15).toFixed(2) %> (+15%) within the next year. 
+            The algorithm indicates <strong>moderate bullish</strong> sentiment with 
+            low volatility expected.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fundamental Analysis -->
+    <div class="section">
+      <h2 class="section-title">Fundamental Analysis</h2>
+      <div class="card">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-label">Market Cap</div>
+            <div class="stat-value">₹<%= (quote.marketCap / 10000000).toFixed(2) %> Cr</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">P/E Ratio</div>
+            <div class="stat-value"><%= quote.trailingPE ? quote.trailingPE.toFixed(2) : 'N/A' %></div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">EPS</div>
+            <div class="stat-value">₹<%= quote.epsTrailingTwelveMonths ? quote.epsTrailingTwelveMonths.toFixed(2) : 'N/A' %></div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Dividend Yield</div>
+            <div class="stat-value"><%= quote.dividendYield ? (quote.dividendYield * 100).toFixed(2) + '%' : 'N/A' %></div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">52 Week Range</div>
+            <div class="stat-value">₹<%= quote.fiftyTwoWeekLow %> - ₹<%= quote.fiftyTwoWeekHigh %></div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Beta</div>
+            <div class="stat-value"><%= quote.beta ? quote.beta.toFixed(2) : 'N/A' %></div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">D/E Ratio</div>
+            <div class="stat-value"><%= ratios.debtToEquity %></div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">OPM</div>
+            <div class="stat-value"><%= ratios.operatingMargins ? ratios.operatingMargins.toFixed(2) : 'N/A' %></div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">ROE</div>
+            <div class="stat-value"><%= ratios.returnOnEquity %></div>
+          </div>
+           <div class="stat-item">
+            <div class="stat-label">Interest Coverage</div>
+            <div class="stat-value"><%= ratios.interestCoverage %></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Technical Indicators -->
+    <div class="section">
+      <h2 class="section-title">Technical Indicators</h2>
+      <div class="card">
+        <div class="stats-grid">
+          
+          
+          <div class="stat-item">
+            <div class="stat-label">30-Day MA</div>
+            <div class="stat-value <%= quote.regularMarketPrice > quote.fiftyDayAverage ? 'positive' : 'negative' %>">
+              ₹<%= technicals.sma30 %>
+              (<%= ((quote.regularMarketPrice -technicals.sma30) / technicals.sma30 * 100).toFixed(2) %>%)
+            </div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">100-Day MA</div>
+            <div class="stat-value <%= quote.regularMarketPrice > technicals.sma100? 'positive' : 'negative' %>">
+              ₹<%= technicals.sma100 %>
+              (<%= ((quote.regularMarketPrice - technicals.sma100) / technicals.sma100* 100).toFixed(2) %>%)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+     <div class="section">
+      <h2 class="section-title">Investment Returns</h2>
+      <div class="card">
+        <div class="stats-grid">
+          
+          
+          <div class="stat-item">
+            <div class="stat-label">1 Week </div>
+            <div class="stat-value <%= returns.oneWeek  > 0 ? 'positive' : 'negative' %>">
+              <%= returns.oneWeek %>
+            </div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">1 Year</div>
+            <div class="stat-value <%= returns.Year  > 0 ? 'positive' : 'negative' %>">
+             <%= returns.oneYear %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Analyst Recommendations -->
+    <div class="section">
+      <h2 class="section-title">Market Prediction</h2>
+      <div class="card">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-label">Long Term</div>
+            <div class="stat-value" style="text-transform: capitalize;white-space:nowrap">
+              <%= trendData.upcoming %> 
+            </div>
+          </div>
+
+          <div class="stat-item" style="position: relative; left:50%" >
+            <div class="stat-label">Short Term</div>
+            <div class="stat-value" style="text-transform: capitalize;white-space:nowrap">
+              <%= trendData.shortTerm%> 
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+     <div class="section">
+      <h2 class="section-title">About Company</h2>
+      <div class="card">
+        <div class="news-item">
+          <div class="news-title">Sector : <%= companyDetails.sector %></div>
+          <div class="news-date"></div>
+        </div>
+        <div class="news-item">
+          <div class="news-title">Industry : <%= companyDetails.industry %></div>
+          <div class="news-date"></div>
+        </div>
+        <div class="news-item">
+          <div class="news-title"> CEO : <%= companyDetails.ceo %></div>
+          <div class="news-date"></div>
+        </div>
+        <div class="news-item">
+          <div class="news-title">Website: <a href="<%= companyDetails.website %>"><%= companyDetails.website %></a></div>
+          <div class="news-date"></div>
+        </div>
+        <div class="news-item">
+          <div class="news-title">Description : <%= companyDetails.description %></a></div>
+          <div class="news-date"></div>
+        </div>
+      </div>
+    </div>
+ 
+
+    <!-- Recent News -->
+    <div class="section">
+      <h2 class="section-title">Recent News</h2>
+      <div class="card">
+        <div class="news-item">
+          <div class="news-title"><%= quote.shortName %> announces Q3 results with 12% revenue growth</div>
+          <div class="news-date">2 days ago • Economic Times</div>
+        </div>
+        <div class="news-item">
+          <div class="news-title">Analysts raise target price after strong earnings</div>
+          <div class="news-date">5 days ago • Business Standard</div>
+        </div>
+        <div class="news-item">
+          <div class="news-title"><%= quote.shortName %> included in MSCI India Index</div>
+          <div class="news-date">1 week ago • Moneycontrol</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script>
+    // Theme toggle functionality
+    document.getElementById('themeToggle').addEventListener('click', function() {
+      document.body.classList.toggle('light-mode');
+      const isLight = document.body.classList.contains('light-mode');
+      this.innerHTML = `<i class="fas fa-${isLight ? 'sun' : 'moon'}"></i> ${isLight ? 'Light' : 'Dark'} Mode`;
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+      updateChartColors();
+    });
+
+    // Check for saved theme preference
+    if (localStorage.getItem('theme') === 'light') {
+      document.body.classList.add('light-mode');
+      document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+    }
+
+    // Watchlist functionality
+    const watchlistBtn = document.getElementById('watchlistBtn');
+    const currentSymbol = '<%= quote.symbol %>';
+
+    // Initialize watchlist button state
+    function updateWatchlistButton() {
+      const watchlist = JSON.parse(localStorage.getItem('watchlist')) || [];
+      const isInWatchlist = watchlist.includes(currentSymbol);
+      
+      if (isInWatchlist) {
+        watchlistBtn.innerHTML = '<i class="fas fa-star"></i> In Watchlist';
+        watchlistBtn.classList.add('added');
+      } else {
+        watchlistBtn.innerHTML = '<i class="far fa-star"></i> Add to Watchlist';
+        watchlistBtn.classList.remove('added');
+      }
+    }
+
+    // Toggle stock in watchlist
+    watchlistBtn.addEventListener('click', function() {
+      let watchlist = JSON.parse(localStorage.getItem('watchlist')) || [];
+      const index = watchlist.indexOf(currentSymbol);
+      
+      if (index === -1) {
+        // Add to watchlist
+        watchlist.push(currentSymbol);
+      } else {
+        // Remove from watchlist
+        watchlist.splice(index, 1);
+      }
+      
+      localStorage.setItem('watchlist', JSON.stringify(watchlist));
+      updateWatchlistButton();
+    });
+
+    // Initialize watchlist button on page load
+    updateWatchlistButton();
+
+    // Chart Data
+    const historyData = <%- JSON.stringify(history) %> || [];
+    let priceChart, volumeChart;
+
+    // Initialize Charts
+    function initializeCharts() {
+      createPriceChart();
+      createVolumeChart();
+      
+      // Timeframe buttons
+      document.querySelectorAll('.timeframe-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.timeframe-btn').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          updateCharts(parseInt(this.dataset.days));
+        });
+      });
+    }
+
+    function createPriceChart() {
+      const ctx = document.getElementById('priceChart').getContext('2d');
+      const isLightMode = document.body.classList.contains('light-mode');
+      const primaryColor = isLightMode ? '#2a7de1' : '#4fc3f7';
+      const secondaryColor = isLightMode ? '#3aa8d8' : '#64fdd8';
+      
+      const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+      gradient.addColorStop(0, `${secondaryColor}80`);
+      gradient.addColorStop(1, `${secondaryColor}00`);
+      
+      priceChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: historyData.map(item => item.date),
+          datasets: [{
+            label: 'Closing Price (₹)',
+            data: historyData.map(item => item.close),
+            borderColor: primaryColor,
+            backgroundColor: gradient,
+            borderWidth: 2,
+            pointRadius: 0,
+            fill: true,
+            tension: 0.4
+          }]
+        },
+        options: getChartOptions('Price (₹)', isLightMode)
+      });
+    }
+
+    function createVolumeChart() {
+      const ctx = document.getElementById('volumeChart').getContext('2d');
+      const isLightMode = document.body.classList.contains('light-mode');
+      const primaryColor = isLightMode ? '#2a7de1' : '#4fc3f7';
+      
+      volumeChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: historyData.map(item => item.date),
+          datasets: [{
+            label: 'Volume',
+            data: historyData.map(item => item.volume / 1000000), // Convert to millions
+            backgroundColor: primaryColor,
+            borderColor: 'rgba(0, 0, 0, 0.1)',
+            borderWidth: 1
+          }]
+        },
+        options: getChartOptions('Volume (Millions)', isLightMode)
+      });
+    }
+
+    function getChartOptions(yAxisTitle, isLightMode) {
+      return {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            labels: {
+              color: isLightMode ? '#333' : '#fff'
+            }
+          },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+            callbacks: {
+              label: function(context) {
+                return `${context.dataset.label}: ${context.parsed.y.toFixed(2)}`;
+              }
+            }
+          },
+          zoom: {
+            zoom: {
+              wheel: {
+                enabled: true,
+              },
+              pinch: {
+                enabled: true
+              },
+              mode: 'x',
+            },
+            pan: {
+              enabled: true,
+              mode: 'x',
+            }
+          }
+        },
+        scales: {
+          x: {
+            type: 'time',
+            time: {
+              tooltipFormat: 'DD MMM YYYY'
+            },
+            grid: {
+              color: isLightMode ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.1)'
+            },
+            ticks: {
+              color: isLightMode ? '#666' : 'rgba(255,255,255,0.7)'
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: yAxisTitle,
+              color: isLightMode ? '#666' : 'rgba(255,255,255,0.7)'
+            },
+            grid: {
+              color: isLightMode ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.1)'
+            },
+            ticks: {
+              color: isLightMode ? '#666' : 'rgba(255,255,255,0.7)'
+            }
+          }
+        }
+      };
+    }
+
+    function updateCharts(days) {
+      let filteredData = historyData;
+      if (days > 0) {
+        const cutoffDate = new Date();
+        cutoffDate.setDate(cutoffDate.getDate() - days);
+        filteredData = historyData.filter(item => new Date(item.date) >= cutoffDate);
+      }
+      
+      // Update Price Chart
+      priceChart.data.labels = filteredData.map(item => item.date);
+      priceChart.data.datasets[0].data = filteredData.map(item => item.close);
+      priceChart.update();
+      
+      // Update Volume Chart
+      volumeChart.data.labels = filteredData.map(item => item.date);
+      volumeChart.data.datasets[0].data = filteredData.map(item => item.volume / 1000000);
+      volumeChart.update();
+    }
+
+    function updateChartColors() {
+      const isLightMode = document.body.classList.contains('light-mode');
+      const primaryColor = isLightMode ? '#2a7de1' : '#4fc3f7';
+      const secondaryColor = isLightMode ? '#3aa8d8' : '#64fdd8';
+
+      if (priceChart) {
+        // Update gradient
+        const ctx = priceChart.ctx;
+        const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, `${secondaryColor}80`);
+        gradient.addColorStop(1, `${secondaryColor}00`);
+        
+        priceChart.data.datasets[0].borderColor = primaryColor;
+        priceChart.data.datasets[0].backgroundColor = gradient;
+        priceChart.options = getChartOptions('Price (₹)', isLightMode);
+        priceChart.update();
+      }
+
+      if (volumeChart) {
+        volumeChart.data.datasets[0].backgroundColor = primaryColor;
+        volumeChart.options = getChartOptions('Volume (Millions)', isLightMode);
+        volumeChart.update();
+      }
+    }
+
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', initializeCharts);
+     gsap.to(".suc", {
+                    y: -1000,
+                    duration: 1,
+
+
+
+
+                    delay: 3
+                })
+                gsap.from(".suc", {
+                    y: -1000,
+                    duration: 1,
+
+
+
+
+                    delay: 0.3
+                })
+  </script>
+</body>
+</html>

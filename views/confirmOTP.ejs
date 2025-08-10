@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockSense - Login/Signup</title>
+    <link rel="stylesheet" href="/styles/registerlogin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+</head>
+
+<body>
+    <% if(suc.length>0) { %>
+        <p class="suc">
+            <%= suc%>
+        </p>
+        <% } %>
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-chart-line"></i>StockSense
+                </a>
+                <div class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon toggle-icon"></i>
+                    <span class="toggle-text">Dark Mode</span>
+                </div>
+            </nav>
+
+            <main class="main-content">
+                <div class="auth-container" id="loginContainer">
+                    <h2 class="auth-title">Verfication with OTP</h2>
+                    <form onsubmit="return detect(event)" class="auth-form" id="loginForm" action="/otp/data" method="get">
+                        <div class="form-group">
+                            <label for="loginEmail">OTP</label>
+                            <input type="hidden" class="otp" name="" value="<%= otp %>" id="">
+                            <input type="hidden" name="email" id="" value="<%=email %>">
+                            <input type="number" class="uotp" name="uotp" length="4" id="loginEmail"
+                                placeholder="Enter 4 digits OTP here" required>
+                        </div>
+                      
+                        <p class="err"></p>
+                        <button type="submit">Verify</button>
+                        
+                    </form>
+                </div>
+
+                
+            </main>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+            <script>
+               
+                // Theme Toggle Functionality
+                const themeToggle = document.getElementById('themeToggle');
+                const toggleIcon = themeToggle.querySelector('.toggle-icon');
+                const toggleText = themeToggle.querySelector('.toggle-text');
+
+                // Check for saved theme preference or use preferred color scheme
+                const currentTheme = localStorage.getItem('theme') ||
+                    (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+
+                if (currentTheme === 'light') {
+                    document.body.classList.add('light-mode');
+                    toggleIcon.classList.replace('fa-moon', 'fa-sun');
+                    toggleText.textContent = 'Light Mode';
+                }
+
+                themeToggle.addEventListener('click', () => {
+                    document.body.classList.toggle('light-mode');
+                    const isLightMode = document.body.classList.contains('light-mode');
+
+                    if (isLightMode) {
+                        toggleIcon.classList.replace('fa-moon', 'fa-sun');
+                        toggleText.textContent = 'Light Mode';
+                        localStorage.setItem('theme', 'light');
+                    } else {
+                        toggleIcon.classList.replace('fa-sun', 'fa-moon');
+                        toggleText.textContent = 'Dark Mode';
+                        localStorage.setItem('theme', 'dark');
+                    }
+                });
+
+
+
+
+               function detect(event) {
+            const originalOTP = document.querySelector('.otp').value;
+            const userOTP = document.querySelector('.uotp').value;
+            const error = document.querySelector('.err');
+            const loginmail = document.querySelector('#loginEmail');
+
+            if (originalOTP !== userOTP) {
+                event.preventDefault(); // Stop form submission
+                error.innerHTML = "❗ Incorrect OTP. Please try again.";
+                loginmail.value  = ""
+                return false;
+            }
+            return true; // Submit if matches
+        }
+
+                // Form Submission Handling
+
+
+                // Animation on page load
+                document.addEventListener('DOMContentLoaded', () => {
+                    // Navbar animation
+                    gsap.to('.navbar', {
+                        y: 0,
+                        duration: 0.8,
+                        ease: 'power3.out'
+                    });
+
+                    // Theme toggle animation
+                    gsap.to('.theme-toggle', {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        delay: 0.2,
+                        ease: 'power3.out'
+                    });
+
+                    // Show login form by default with animation
+                    const loginContainer = document.getElementById('loginContainer');
+                    loginContainer.style.display = 'block';
+                    gsap.to(loginContainer, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        delay: 0.4,
+                        ease: 'power3.out'
+                    });
+                });
+                gsap.to(".suc", {
+                    y: -1000,
+                    duration: 1,
+
+
+
+
+                    delay: 3
+                })
+                gsap.from(".suc", {
+                    y: -1000,
+                    duration: 1,
+
+
+
+
+                    delay: 0.3
+                })
+            </script>
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background-color: #f9f9f9;
+      padding: 2rem;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+    }
+    .info {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+    }
+    .info div {
+      width: 48%;
+    }
+    .back {
+      display: block;
+      margin-bottom: 1rem;
+      color: #0066cc;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <a href="/home" class="back">← Back to Home</a>
+  <h1><%= stock.symbol %> - Stock Details</h1>
+
+  <canvas id="stockChart" height="150"></canvas>
+
+  <div class="info">
+    <div>
+      <p><strong>Open:</strong> ₹ <%= stock.open %></p>
+      <p><strong>High:</strong> ₹ <%= stock.high %></p>
+      <p><strong>Low:</strong> ₹ <%= stock.low %></p>
+      <p><strong>Price:</strong> ₹ <%= stock.price %></p>
+    </div>
+    <div>
+      <p><strong>Previous Close:</strong> ₹ <%= stock.previousClose %></p>
+      <p><strong>Change:</strong> <%= stock.change %> (<%= stock.changePercent %>)</p>
+      <p><strong>Volume:</strong> <%= stock.volume %></p>
+      <p><strong>Date:</strong> <%= stock.latestTradingDay %></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const ctx = document.getElementById('stockChart').getContext('2d');
+  const chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Open', 'High', 'Low', 'Current'],
+      datasets: [{
+        label: '<%= stock.symbol %> Price (₹)',
+        data: [<%= stock.open %>, <%= stock.high %>, <%= stock.low %>, <%= stock.price %>],
+        backgroundColor: ['#3498db', '#2ecc71', '#e67e22', '#9b59b6'],
+        borderColor: '#2c3e50',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: false
+        }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>

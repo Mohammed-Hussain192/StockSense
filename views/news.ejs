@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockSense - Market News</title>
+    <link rel="stylesheet" href="/styles/news.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <i class="fas fa-chart-line"></i>StockSense
+        </a>
+        <ul class="nav-links">
+            <a href="/home">Home</a>
+            <a href="/market">Markets</a>
+            <a href="/watchlist">Watchlist</a>
+            <a href="Profile">Portfolio</a>
+            <a href="/search/stock">Search Stock</a>
+
+            <a href="/news">News</a>
+        </ul>
+        <div class="auth-buttons">
+            <div class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon toggle-icon"></i>
+                <span class="toggle-text">Dark Mode</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <div class="header">
+            <h1>Market News & Updates</h1>
+            <p>Latest financial news affecting the stock market | Updated in real-time</p>
+        </div>
+
+        <!-- News Categories -->
+        <div class="news-categories">
+            <button class="category-btn active">All News</button>
+            <button class="category-btn">Market Trends</button>
+            <button class="category-btn">Company News</button>
+            <button class="category-btn">Economic Data</button>
+            <button class="category-btn">Global Markets</button>
+            <button class="category-btn">IPO Updates</button>
+        </div>
+
+        <!-- News List -->
+        <div class="news-container">
+            <ul class="news-list">
+                <% if (newsList && newsList.length> 0) { %>
+                    <ul class="news-list">
+                        <% newsList.forEach(news=> { %>
+                            <li class="news-item">
+                                <a href="<%= news.link[0] %>" target="_blank" rel="noopener noreferrer">
+                                    <%= news.title[0] %>
+                                </a>
+                                <p>
+                                    <%= news.pubDate ? new Date(news.pubDate[0]).toLocaleString() : '' %>
+                                </p>
+                            </li>
+                            <% }) %>
+                    </ul>
+                    <% } else { %>
+                        <p>No news available at the moment.</p>
+                        <% } %>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const toggleIcon = themeToggle.querySelector('.toggle-icon');
+        const toggleText = themeToggle.querySelector('.toggle-text');
+
+        // Check for saved theme preference or use preferred color scheme
+        const currentTheme = localStorage.getItem('theme') ||
+            (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+
+        if (currentTheme === 'light') {
+            document.body.classList.add('light-mode');
+            toggleIcon.classList.replace('fa-moon', 'fa-sun');
+            toggleText.textContent = 'Light Mode';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            const isLightMode = document.body.classList.contains('light-mode');
+
+            if (isLightMode) {
+                toggleIcon.classList.replace('fa-moon', 'fa-sun');
+                toggleText.textContent = 'Light Mode';
+                localStorage.setItem('theme', 'light');
+            } else {
+                toggleIcon.classList.replace('fa-sun', 'fa-moon');
+                toggleText.textContent = 'Dark Mode';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Category buttons functionality
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                // Here you would typically filter news by category
+                // For this template, we're just showing the active state
+            });
+        });
+    </script>
+</body>
+
+</html>
